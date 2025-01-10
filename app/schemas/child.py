@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 class ChildBase(BaseModel):
     name: str
+    gender: str
     age: int
 
 class ChildCreate(ChildBase):

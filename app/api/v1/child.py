@@ -6,9 +6,11 @@ from app.schemas.child import ChildCreate, ChildRead
 
 router = APIRouter()
 
+
 @router.post("/", response_model=ChildRead)
 def create_new_child(child_in: ChildCreate, db: Session = Depends(get_db)):
     return create_child(db, child_in)
+
 
 @router.get("/", response_model=list[ChildRead])
 def list_children(db: Session = Depends(get_db)):
