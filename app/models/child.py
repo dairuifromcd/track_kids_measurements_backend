@@ -1,5 +1,7 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Enum
-from sqlalchemy.orm import relationship
+from datetime import date
+
+from sqlalchemy import Integer, String, Enum, Date
+from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.database import Base
 
@@ -7,14 +9,17 @@ from app.db.database import Base
 class Child(Base):
     __tablename__ = "children"
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=False)
-    age = Column(Integer, nullable=False)
-    gender = Column(Enum("M", "F", name="gender_enum"), nullable=False)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(String, nullable=False)
+    date_of_birth: Mapped[date] = mapped_column(Date, nullable=False)
+    gender: Mapped[str] = mapped_column(
+        Enum("M", "F", name="gender_enum"),
+        nullable=False
+    )
 
-    def __init__(self, name, age, gender):
+    def __init__(self, name, date_of_birth, gender):
         self.name = name
-        self.age = age
+        self.date_of_birth = date_of_birth
         gender = gender.strip().lower()
 
         if gender in {"m", "male"}:
@@ -22,7 +27,15 @@ class Child(Base):
         elif gender in {"f", "female"}:
             self.gender = "F"
         else:
-            raise ValueError(f"Invalid gender: {gender}. Allowed values are 'M', 'F', 'Male', 'Female'.")
-        
+            raise ValueError(
+                f"Invalid gender: {gender}. "
+                f"Allowed values are 'M', 'F', 'Male', 'Female'."
+            )
+
     def __repr__(self):
-        return f"<Child(id={self.id}, name={self.name}, age={self.age}, gender={self.gender})>"
+        return (
+            f"<Child(id={self.id}, "
+            f"name={self.name}, "
+            f"age={self.age}, "
+            f"gender={self.gender})>"
+        )

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.api.deps import get_db
-from app.crud.child import create_child, get_children
+from app.crud.child import create_child, get_children, delete_child
 from app.schemas.child import ChildCreate, ChildRead
 
 router = APIRouter()
@@ -15,3 +15,8 @@ def create_new_child(child_in: ChildCreate, db: Session = Depends(get_db)):
 @router.get("/", response_model=list[ChildRead])
 def list_children(db: Session = Depends(get_db)):
     return get_children(db)
+
+
+@router.delete("/{child_id}", status_code=204)
+def remove_child(child_id: int, db: Session = Depends(get_db)):
+    return delete_child(db, child_id)

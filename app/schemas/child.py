@@ -1,12 +1,16 @@
 from pydantic import BaseModel
+from datetime import date
+
 
 class ChildBase(BaseModel):
     name: str
+    date_of_birth: date
     gender: str
-    age: int
+
 
 class ChildCreate(ChildBase):
     pass
+
 
 class ChildRead(ChildBase):
     id: int
