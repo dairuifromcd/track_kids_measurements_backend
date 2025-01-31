@@ -1,9 +1,12 @@
 from datetime import date
+from typing import List
 
 from sqlalchemy import Integer, String, Enum, Date
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.database import Base
+
+from app.models.measurement import Measurement
 
 
 class Child(Base):
@@ -15,6 +18,12 @@ class Child(Base):
     gender: Mapped[str] = mapped_column(
         Enum("M", "F", name="gender_enum"),
         nullable=False
+    )
+
+    # Relationship to Measurement
+    measurements: Mapped[List[Measurement]] = relationship(
+        "Measurement",
+        back_populates="child"
     )
 
     def __init__(self, name, date_of_birth, gender):

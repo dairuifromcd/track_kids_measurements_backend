@@ -17,6 +17,6 @@ def list_children(db: Session = Depends(get_db)):
     return get_children(db)
 
 
-@router.delete("/{child_id}", status_code=204)
+@router.delete("/{child_id}", response_model=ChildRead)
 def remove_child(child_id: int, db: Session = Depends(get_db)):
     return delete_child(db, child_id)

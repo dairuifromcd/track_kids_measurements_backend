@@ -12,13 +12,11 @@ def create_child(db: Session, child: ChildCreate) -> Child:
     return child
 
 
-def get_children(db: Session):
+def get_children(db: Session) -> list[Child]:
     return db.query(Child).all()
 
 
-def delete_child(db: Session, child_id: int):
+def delete_child(db: Session, child_id: int) -> None:
     child = db.query(Child).filter(Child.id == child_id).first()
     db.delete(child)
     db.commit()
-
-    return child
