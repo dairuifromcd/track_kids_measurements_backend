@@ -1,12 +1,13 @@
 from datetime import date
-from typing import List
+from typing import List, TYPE_CHECKING
 
 from sqlalchemy import Integer, String, Enum, Date
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.database import Base
 
-from app.models.measurement import Measurement
+if TYPE_CHECKING:
+    from app.models.measurement import Measurement
 
 
 class Child(Base):
@@ -21,7 +22,7 @@ class Child(Base):
     )
 
     # Relationship to Measurement
-    measurements: Mapped[List[Measurement]] = relationship(
+    measurements: Mapped[List["Measurement"]] = relationship(
         "Measurement",
         back_populates="child"
     )

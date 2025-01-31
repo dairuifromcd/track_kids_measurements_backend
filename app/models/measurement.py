@@ -1,11 +1,13 @@
 from datetime import date
+from typing import TYPE_CHECKING
 
 from sqlalchemy import Integer, Float, Date, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.database import Base
 
-from app.models.child import Child
+if TYPE_CHECKING:
+    from app.models.child import Child
 
 
 class Measurement(Base):
@@ -24,7 +26,10 @@ class Measurement(Base):
     )
 
     # Relationship back to Child
-    child: Mapped[Child] = relationship("Child", back_populates="measurements")
+    child: Mapped["Child"] = relationship(
+        "Child",
+        back_populates="measurements"
+    )
 
     def __repr__(self):
         return (
