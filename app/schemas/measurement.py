@@ -3,9 +3,10 @@ from datetime import date
 
 
 class MeasurementBase(BaseModel):
+    child_id: int
     height: float
     weight: float
-    measurement_date: date
+    measure_date: date
 
 
 class MeasurementCreate(MeasurementBase):
