@@ -1,5 +1,8 @@
 # track_kids_measurements_backend
 
+# update requirements.txt
+pip freeze > requirements.txt
+
 # run the backend
 uvicorn app.main:app --reload
 
