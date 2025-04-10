@@ -13,8 +13,12 @@ class MeasurementCreate(MeasurementBase):
     pass
 
 
+class MeasurementUpdate(MeasurementBase):
+    pass
+
+
 class MeasurementRead(MeasurementBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
