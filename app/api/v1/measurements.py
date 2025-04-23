@@ -9,7 +9,8 @@ from app.crud.measurement import (
     create_measurement,
     get_measurements,
     update_measurement,
-    delete_measurements
+    delete_measurements,
+    delete_measurement
 )
 from app.schemas.measurement import (
     MeasurementCreate,
@@ -65,6 +66,20 @@ def update_measurement_endpoint(
     if not updated_measurement:
         raise HTTPException(status_code=404, detail="Measurement not found")
     return updated_measurement
+
+
+@router.delete("/{measurement_id}")
+def delete_measurement_endpoint(
+    request: Request,
+    measurement_id: int,
+    db: Session = Depends(get_db)
+) -> None:
+    logger.debug(f"Request headers: {dict(request.headers)}")
+    logger.debug(f"Measurement ID: {measurement_id}")
+    try:
+        delete_measurement(db, measurement_id)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
 
 
 @router.delete("/")

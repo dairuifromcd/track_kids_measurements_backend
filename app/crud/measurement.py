@@ -48,6 +48,19 @@ def update_measurement(
     return db_measurement
 
 
+def delete_measurement(
+    db: Session,
+    measurement_id: int
+) -> None:
+    measurement = db.query(Measurement).filter(
+        Measurement.id == measurement_id
+    ).first()
+    if measurement is None:
+        raise ValueError(f"Measurement with id {measurement_id} not found")
+    db.delete(measurement)
+    db.commit()
+
+
 def delete_measurements(
     db: Session,
     child_id: int,
